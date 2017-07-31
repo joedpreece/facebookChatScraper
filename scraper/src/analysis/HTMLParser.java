@@ -8,18 +8,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import objects.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import objects.Contribution;
-import objects.Message;
-import objects.User;
-
 public class HTMLParser {
 
-	public static Set<Contribution> parseHTMLFile(String filepath) throws IOException {
+	public static Conversation parseHTMLFile(String filepath) throws IOException {
 		Set<Contribution> contributions = new HashSet<>();
 		File htmlFile = new File(filepath);
 		if (htmlFile.exists()) {
@@ -40,17 +37,16 @@ public class HTMLParser {
 			for (Element messageElement : messageElements) {
 				Elements individualMessageElements = messageElement.getElementsByClass("pclass");
 				for (Element individualMessageElement : individualMessageElements) {
-					messages.add(new Message(individualMessageElement.html(), null));
+					messages.add(new StringMessage(individualMessageElement.html()));
 				}
 			}
 			if (!imageElements.isEmpty()) {
-				messages.add(new Message(null, messageElements.select("src").html()));
-				System.out.println(imageElements.attr("src"));
+				messages.add(new ImageMessage(messageElements.select("src").html()));
 			}
 			contributions.add(new Contribution(timestamp, user, messages));
 		}
 		System.out.println(filepath + " parsed successfully.\n\n");
-		return contributions;
+		return new Conversation(contributions);
 	}
 	
 }

@@ -1,13 +1,14 @@
 package objects;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
-	
+
 	private String name;
-	public String getName() {return this.name;}
 	
 	private String url;
-	public String geturl() {return this.url;}
-	
+
 	public User(String name, String url) {
 		this.name = name;
 		this.url = url;
@@ -15,7 +16,7 @@ public class User {
 	
 	@Override
 	public boolean equals(Object o) {
-		return (o instanceof User) && (((User) o).geturl().equals(this.url));
+		return (o instanceof User) && (((User) o).getUrl().equals(this.url));
 	}
 	
     @Override
@@ -27,5 +28,20 @@ public class User {
     public String toString() {
     	return name;
     }
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

@@ -1,30 +1,18 @@
 package analysis;
 
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 import objects.Contribution;
+import objects.Conversation;
 import objects.User;
 
 public class Methods {
 	
-	public static HashMap<User, Integer> listNumberOfContributionsPerUser(Set<Contribution> contributions) {
-		HashMap<User, Integer> rankings = new HashMap<>();
-		for (Contribution contribution : contributions) {
-			User user = contribution.getUser();
-			if (rankings.containsKey(user)) {
-				Integer currentTotal = rankings.get(user);
-				rankings.put(user, currentTotal + 1); 
-			} else {
-				rankings.put(user, 0);
-			}
-		}
-		return rankings;
-	}
-	
-	public static Integer totalContributions(Set<Contribution> contributions) {
-		return contributions.size();
-	}
+    public static ArrayList<String> rankByUseContribution(Conversation conversation) {
+        ArrayList<String> output = new ArrayList<>();
+        //TODO write this method
+        return output;
+    }
 	
 	public static Integer totalMessages(Set<Contribution> contributions) {
 		int runningTotal = 0;
