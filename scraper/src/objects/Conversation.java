@@ -1,8 +1,6 @@
 package objects;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -19,9 +17,12 @@ public class Conversation {
     public Conversation(Set<Contribution> contributions) {
         this.contributions = contributions;
         this.users = determineUsers();
-        updateUserData();
     }
 
+    /**
+     * Determines the users in this conversation.
+     * @return a set of all of the users in the conversation
+     */
     private Set<User> determineUsers() {
         Set<User> users = new HashSet<>();
         for (Contribution contribution : this.contributions) {
@@ -31,12 +32,9 @@ public class Conversation {
     }
 
     /**
-     * Updates the number of contribution and messages data for all users within the conversation.
+     * Gets the total number of messages in the conversation.
+     * @return the total number of messages in the conversation.
      */
-    private void updateUserData() {
-        //TODO Write this method
-    }
-
     public Integer getNumberOfMessages() {
         int runningTotal = 0;
         for (Contribution contribution : this.contributions) {
