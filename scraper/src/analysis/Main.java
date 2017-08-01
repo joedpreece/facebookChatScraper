@@ -11,13 +11,11 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		
 		Conversation conversation = HTMLParser.parseHTMLFile("scraper/src/files/india.html");
-		
-		System.out.println("Total contributions: " + conversation.getContributions().size());
-		System.out.println("Total messages: " + conversation.getNumberOfMessages());
-		
-		System.out.println(Methods.rankByUseContribution(conversation));
-		
-		
+
+		ConsoleOutput.printConversationInformation(conversation);
+		ConsoleOutput.printUserContributions(conversation);
+        //ConsoleOutput.printAllWordFrequency(conversation);
+        ConsoleOutput.printContributionPerDay(conversation);
 	}
 	
 }

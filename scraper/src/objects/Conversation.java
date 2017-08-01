@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -8,15 +9,35 @@ import java.util.Set;
  */
 public class Conversation {
 
+    /**
+     * The contributions in this conversation.
+     */
     private Set<Contribution> contributions;
-    public Set<Contribution> getContributions() {return this.contributions;}
 
+    /**
+     * The users in this conversation.
+     */
     private Set<User> users;
-    public Set<User> getUsers() {return this.users;}
 
+    /**
+     * Constructs a new conversation from a set of contributions.
+     * @param contributions the contributions associated with this conversation
+     */
     public Conversation(Set<Contribution> contributions) {
         this.contributions = contributions;
         this.users = determineUsers();
+    }
+
+    /**
+     * Gets the total number of messages in the conversation.
+     * @return the total number of messages in the conversation.
+     */
+    public Integer getNumberOfMessages() {
+        int runningTotal = 0;
+        for (Contribution contribution : this.contributions) {
+            runningTotal = runningTotal + contribution.getMessages().size();
+        }
+        return runningTotal;
     }
 
     /**
@@ -31,16 +52,12 @@ public class Conversation {
         return users;
     }
 
-    /**
-     * Gets the total number of messages in the conversation.
-     * @return the total number of messages in the conversation.
-     */
-    public Integer getNumberOfMessages() {
-        int runningTotal = 0;
-        for (Contribution contribution : this.contributions) {
-            runningTotal = runningTotal + contribution.getMessages().size();
-        }
-        return runningTotal;
+    public Set<Contribution> getContributions() {
+        return contributions;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 
 }

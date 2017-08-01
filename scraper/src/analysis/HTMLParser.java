@@ -37,7 +37,7 @@ public class HTMLParser {
 			for (Element messageElement : messageElements) {
 				Elements individualMessageElements = messageElement.getElementsByClass("pclass");
 				for (Element individualMessageElement : individualMessageElements) {
-					messages.add(new StringMessage(individualMessageElement.html()));
+					messages.add(new StringMessage(individualMessageElement.html(), individualMessageElement.text()));
 				}
 			}
 			if (!imageElements.isEmpty()) {
@@ -45,7 +45,7 @@ public class HTMLParser {
 			}
 			contributions.add(new Contribution(timestamp, user, messages));
 		}
-		System.out.println(filepath + " parsed successfully.\n\n");
+		System.out.println(filepath + " parsed successfully.\n");
 		return new Conversation(contributions);
 	}
 	
