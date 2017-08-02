@@ -14,7 +14,7 @@ public class ConsoleOutput {
     public static void printUserContributions(Conversation conversation) {
         System.out.println("User Contributions:");
         Map<String, Integer> contributions = Queries.determineUserContributions(conversation);
-        String format = "%-20s\t%6d\n";
+        String format = "%-30s\t%6d\n";
         contributions.forEach((k, v) -> {
             System.out.printf(format, k, v);
         });

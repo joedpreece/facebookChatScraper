@@ -18,7 +18,11 @@ public class User {
 
     @Override
     public int hashCode() {
-        return this.url.hashCode();
+        if (!url.isEmpty()) {
+            return this.url.hashCode();
+        } else {
+            return this.name.hashCode();
+        }
     }
 
     @Override
@@ -30,15 +34,8 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }
