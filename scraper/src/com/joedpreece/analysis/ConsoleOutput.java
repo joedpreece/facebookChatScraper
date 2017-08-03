@@ -46,30 +46,21 @@ public class ConsoleOutput {
         System.out.println();
     }
 
-    public static void printContributionPerDay(Conversation conversation) {
-        Map<String, Integer> contributionTotal = new TreeMap<>();
-        for (Contribution contribution : conversation.getContributions()) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(contribution.getTimestamp());
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH) + 1;
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            String date = year + "-" + month + "-" + String.format("%02d", day);
-            if (contributionTotal.containsKey(date)) {
-                contributionTotal.put(date, contributionTotal.get(date) + 1);
-            } else {
-                contributionTotal.put(date, 1);
-            }
-        }
-        String format = "%-10s\t%6d\n";
-        contributionTotal.forEach((date, contributions) -> {
-            System.out.printf(format, date, contributions);
+    public static void printUserContributionOverTime(Conversation conversation) {
+        System.out.println("User Contributions Over Time:");
+        Map<String, Map<User, Integer>> map = Queries.getUserContributionsOverTime(conversation);
+        String format = "%-10s\t%-15s\t%6d\n";
+        map.forEach((date, submap) -> {
+            submap.forEach((user, contributions) -> {
+                System.out.printf(format, date, user, contributions);
+            });
         });
+        System.out.println();
     }
 
     public static void printEmojiFrequency(Conversation conversation) {
         System.out.println("Emoji Frequencies:");
-        Map<String, Integer> emojiFrequencies = Queries.getEmojiFrequencies(conversation);
+        Map<String, Integer> emojiFrequencies = Queries.determineEmojiFrequencies(conversation);
         String format = "%-6s\t%6d\n";
         emojiFrequencies.forEach((emoji, frequency) -> {
             System.out.printf(format, emoji, frequency);

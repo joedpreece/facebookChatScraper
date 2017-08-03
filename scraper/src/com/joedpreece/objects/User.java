@@ -1,15 +1,20 @@
 package com.joedpreece.objects;
 
+import java.util.Set;
+
 public class User {
 
     private String name;
-
     private String url;
+
+
 
     public User(String name, String url) {
         this.name = name;
         this.url = url;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

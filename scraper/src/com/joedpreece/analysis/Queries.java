@@ -76,7 +76,7 @@ public class Queries {
         }
     }
 
-    public static Map<String, Integer> getEmojiFrequencies(Conversation conversation) {
+    public static Map<String, Integer> determineEmojiFrequencies(Conversation conversation) {
         String methodSerialNumber = "M5R5-GSSR-73U8-HP5M";
         if (dataCache.get(conversation).containsKey(methodSerialNumber)) {
             return (Map<String, Integer>) dataCache.get(conversation).get(methodSerialNumber);
@@ -116,6 +116,12 @@ public class Queries {
         }
 
         return result;
+    }
+
+    public static Map<String, Map<User, Integer>> getUserContributionsOverTime(Conversation conversation) {
+        Map<String, Map<User, Integer>> contributionTotal = new TreeMap<>();
+
+        return contributionTotal;
     }
 
 }
