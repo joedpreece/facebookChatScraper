@@ -1,7 +1,9 @@
 package com.joedpreece.analysis;
 
+import java.time.YearMonth;
 import java.util.*;
 
+import com.google.common.collect.Table;
 import com.joedpreece.objects.*;
 
 public class ConsoleOutput {
@@ -46,15 +48,30 @@ public class ConsoleOutput {
         System.out.println();
     }
 
-    public static void printUserContributionOverTime(Conversation conversation) {
+    public static void printUserContributionAgainstTime(Conversation conversation) {
         System.out.println("User Contributions Over Time:");
-        Map<String, Map<User, Integer>> map = Queries.getUserContributionsOverTime(conversation);
-        String format = "%-10s\t%-15s\t%6d\n";
-        map.forEach((date, submap) -> {
-            submap.forEach((user, contributions) -> {
-                System.out.printf(format, date, user, contributions);
-            });
-        });
+        Table<YearMonth, User, Integer> table = Queries.userContributionAgainstTime(conversation);
+        ArrayList<User> users = new ArrayList<>();
+        for (User user : table.columnKeySet()) {
+            System.out.print("\t" + user);
+            users.add(user);
+        }
+        System.out.println();
+        for (Map.Entry<YearMonth, Map<User, Integer>> row : table.rowMap().entrySet()){
+            Map<User, Integer> userStats = row.getValue();
+            YearMonth month = row.getKey();
+            System.out.print(month);
+            int i = 0;
+            for (Map.Entry<User, Integer> userStat : userStats.entrySet()) {
+                while (!users.get(i).equals(userStat.getKey())) {
+                    System.out.print("\t" + 0);
+                    i++;
+                }
+                System.out.print("\t" + userStat.getValue());
+                i++;
+            }
+            System.out.println();
+        }
         System.out.println();
     }
 
@@ -67,5 +84,7 @@ public class ConsoleOutput {
         });
         System.out.println();
     }
+
+
 
 }

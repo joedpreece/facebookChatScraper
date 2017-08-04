@@ -1,7 +1,13 @@
 package com.joedpreece.analysis;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
 import com.joedpreece.objects.*;
 
+import java.time.YearMonth;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -118,10 +124,21 @@ public class Queries {
         return result;
     }
 
-    public static Map<String, Map<User, Integer>> getUserContributionsOverTime(Conversation conversation) {
-        Map<String, Map<User, Integer>> contributionTotal = new TreeMap<>();
+    public static Table<YearMonth, User, Integer> userContributionAgainstTime(Conversation conversation) {
+        Table<YearMonth, User, Integer> table = TreeBasedTable.create();
 
-        return contributionTotal;
+
+        for (Contribution contribution : conversation.getContributions()) {
+            User user = contribution.getUser();
+            Date timestamp = contribution.getTimestamp();
+            YearMonth month = YearMonth.from(timestamp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            if (table.contains(month, user)) {
+                table.put(month, user, table.get(month, user) + 1);
+            } else {
+                table.put(month, user, 1);
+            }
+        }
+        return table;
     }
 
 }
