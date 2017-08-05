@@ -1,5 +1,10 @@
 package com.joedpreece.objects;
 
-public abstract class Message {
+/**
+ * An abstract message.
+ *
+ * @author J. Preece
+ */
+public interface Message {
 
 }

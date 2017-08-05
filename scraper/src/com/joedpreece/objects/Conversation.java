@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Joe on 31/07/17.
+ * A conversation with all contributions and users.
+ *
+ * @author J. Preece
  */
 public class Conversation {
 
@@ -23,6 +25,7 @@ public class Conversation {
 
     /**
      * Constructs a new conversation from a set of contributions.
+     *
      * @param contributions the contributions associated with this conversation
      */
     public Conversation(Set<Contribution> contributions) {
@@ -33,6 +36,7 @@ public class Conversation {
 
     /**
      * Gets the total number of messages in the conversation.
+     *
      * @return the total number of messages in the conversation.
      */
     public Integer getNumberOfMessages() {
@@ -43,8 +47,17 @@ public class Conversation {
         return runningTotal;
     }
 
+    public Set<Contribution> getContributions() {
+        return contributions;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
     /**
      * Determines the users in this conversation.
+     *
      * @return a set of all of the users in the conversation
      */
     private Set<User> determineUsers() {
@@ -52,14 +65,6 @@ public class Conversation {
         for (Contribution contribution : this.contributions) {
             users.add(contribution.getUser());
         }
-        return users;
-    }
-
-    public Set<Contribution> getContributions() {
-        return contributions;
-    }
-
-    public Set<User> getUsers() {
         return users;
     }
 

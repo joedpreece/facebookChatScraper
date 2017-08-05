@@ -14,8 +14,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Class for parsing a HTML file into useful objects.
+ *
+ * @author J. Preece
+ */
 public class HTMLParser {
 
+    /**
+     * Parses a HTML file into a conversation.
+     *
+     * @param filepath the filepath of the file
+     * @return a new conversation with the data from the file
+     * @throws IOException if the file is not found
+     */
     public static Conversation parseHTMLFile(String filepath) throws IOException {
         Set<Contribution> contributions = new HashSet<>();
         File htmlFile = new File(filepath);

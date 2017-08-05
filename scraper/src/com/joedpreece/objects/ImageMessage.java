@@ -1,15 +1,24 @@
 package com.joedpreece.objects;
 
 /**
- * Created by joe on 31/07/17.
+ * An image sent as a message.
+ * @author J. Preece
  */
-public class ImageMessage extends Message {
+public class ImageMessage implements Message {
 
+    /**
+     * The url of this image.
+     */
     private String imageUrl;
-    public String getImageUrl() {return this.imageUrl;}
 
+    /**
+     * Constructs a new image message.
+     * @param imageUrl the url of the image
+     */
     public ImageMessage(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getImageUrl() {return this.imageUrl;}
 
 }

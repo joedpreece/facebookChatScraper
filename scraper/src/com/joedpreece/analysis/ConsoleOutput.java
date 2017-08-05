@@ -15,7 +15,7 @@ public class ConsoleOutput {
      */
     public static void printUserContributions(Conversation conversation) {
         System.out.println("User Contributions:");
-        Map<String, Integer> contributions = Queries.determineUserContributions(conversation);
+        Map<User, Integer> contributions = Queries.userContributions(conversation);
         String format = "%-30s\t%6d\n";
         contributions.forEach((k, v) -> {
             System.out.printf(format, k, v);
@@ -40,7 +40,7 @@ public class ConsoleOutput {
 
     public static void printWordFrequency(Conversation conversation, String... words) {
         System.out.println("Word Frequencies:");
-        Map<String, Integer> wordFrequency = Queries.determineWordFrequencies(conversation, words);
+        Map<String, Integer> wordFrequency = Queries.wordFrequencySpecific(conversation, words);
         String format = "%-20s\t%6d\n";
         wordFrequency.forEach((word, frequency) -> {
             System.out.printf(format, word, frequency);
@@ -48,36 +48,17 @@ public class ConsoleOutput {
         System.out.println();
     }
 
-    public static void printUserContributionAgainstTime(Conversation conversation) {
+    public static void printUserContributionAgainstMonth(Conversation conversation) {
         System.out.println("User Contributions Over Time:");
-        Table<YearMonth, User, Integer> table = Queries.userContributionAgainstTime(conversation);
+        Table<YearMonth, User, Integer> table = Queries.userContributionAgainstMonth(conversation);
         ArrayList<User> users = new ArrayList<>();
-        for (User user : table.columnKeySet()) {
-            System.out.print("\t" + user);
-            users.add(user);
-        }
-        System.out.println();
-        for (Map.Entry<YearMonth, Map<User, Integer>> row : table.rowMap().entrySet()){
-            Map<User, Integer> userStats = row.getValue();
-            YearMonth month = row.getKey();
-            System.out.print(month);
-            int i = 0;
-            for (Map.Entry<User, Integer> userStat : userStats.entrySet()) {
-                while (!users.get(i).equals(userStat.getKey())) {
-                    System.out.print("\t" + 0);
-                    i++;
-                }
-                System.out.print("\t" + userStat.getValue());
-                i++;
-            }
-            System.out.println();
-        }
+        printTable(table);
         System.out.println();
     }
 
     public static void printEmojiFrequency(Conversation conversation) {
         System.out.println("Emoji Frequencies:");
-        Map<String, Integer> emojiFrequencies = Queries.determineEmojiFrequencies(conversation);
+        Map<String, Integer> emojiFrequencies = Queries.emojiFrequency(conversation);
         String format = "%-6s\t%6d\n";
         emojiFrequencies.forEach((emoji, frequency) -> {
             System.out.printf(format, emoji, frequency);
@@ -85,6 +66,34 @@ public class ConsoleOutput {
         System.out.println();
     }
 
+    public static void printEmojiAgainstUser(Conversation conversation) {
+        System.out.println("Emoji Usage Per User:");
+        Table<User, String, Integer> table = Queries.emojiAgainstUser(conversation, 10, 10);
+        printTable(table);
+        System.out.println();
+    }
 
+    /**
+     * Prints a table.
+     *
+     * @param table
+     * @param <R>
+     * @param <C>
+     * @param <V>
+     */
+    public static <R, C, V> void printTable(Table<R, C, V> table) {
+        for (Object R : table.columnKeySet()) {
+            System.out.print("\t" + R);
+        }
+        System.out.println();
+        for (Map.Entry<R, Map<C, V>> row : table.rowMap().entrySet()){
+            Map<C, V> cells = row.getValue();
+            System.out.print(row.getKey());
+            for (Map.Entry<C, V> cell : cells.entrySet()) {
+                System.out.print("\t" + cell.getValue());
+            }
+            System.out.println();
+        }
+    }
 
 }
