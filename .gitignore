@@ -73,7 +73,3 @@ crashlytics-build.properties
 fabric.properties
 
 /scraper/src/files/
-
-git rm --cached --force scraper/src/files/Archery.html
-git rm --cached --force scraper/src/files/Claudia.html
-git rm --cached --force scraper/src/files/India.html
